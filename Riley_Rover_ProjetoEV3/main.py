@@ -21,19 +21,19 @@ class Garra:
         self.motor.run_target(speed=300, target_angle=0) #Target angle funciona para definirmos o angulo em que a garra alcançara para ser considerada aberta ou fechada.
         
     def fechar(self):
-        self.motor.run_target(speed=300, target_angle=90) 
+        self.motor.run_until_stalled(-300, then=Stop.HOLD, duty_limit=50) 
         
  #Criando a classe mestra, contem todos os motores e sensores, para controle e codificação do robo e suas ações.       
 class RileyRover:
     def __init__(self):
         self.ev3 = EV3Brick()
         
-        self.motor_esq = Motor(Port.B)
-        self.motor_dir = Motor(Port.C)
-        self.base = DriveBase(self.motor_esq, self.motor_dir, wheel_diameter=56)
+        self.motor_esq = Motor(Port.A)
+        self.motor_dir = Motor(Port.B)
+        self.base = DriveBase(self.motor_esq, self.motor_dir, wheel_diameter=56, axle_track=104)
         
-        self.garra = Garra(Port.S3)
-        self.sensor_distancia = UltrasonicSensor(Port.S1)
+        self.garra = Garra(Port.C)
+        self.sensor_distancia = UltrasonicSensor(Port.S4)
         
     def iniciar_missao(self): #iniciar_missão é onde esta a logica do projeto, onde definimos oque o robo ira fazer ao achar um objeto, e suas ações pós isso.
         self.ev3.speaker.beep()
@@ -46,9 +46,10 @@ class RileyRover:
                 self.base.stop()
                 self.ev3.speaker.beep()
                 self.garra.fechar()
+                wait(2000)
                 break
             else: 
-                self.base.drive(speed=100, steering=0)
+                self.base.drive(100, 0)
                 
             wait(10)
             
