@@ -46,23 +46,25 @@ class RileyRover:
                 wait(2000)
 
                 self.base.turn(210)
-                self.base.drive(200, 0)
-                wait(7000)
+                self.base.drive(250, 0)
+                wait(3000)
                 self.base.stop()
                 self.garra.abrir()
                 self.ev3.speaker.play_file(SoundFile.FANFARE)
                 self.base.drive(-200, 0)
                 wait(3000)
                 self.base.stop()
+
+                self.base.settings(250, 250, 600, 600) #Definindo as configurações do self.base para que o robo faça a dancinha com mais velocidade.
                 self.base.turn(30)
                 self.base.turn(-60)
                 self.base.turn(60)
                 self.base.turn(-60)
-                self.base.turn(360)
-                self.base.turn(-360)
+                self.base.turn(720)
+                
                 break
             else: 
-                self.base.drive(200, 0)
+                self.base.drive(250, 0)
                 
             wait(10)
             
